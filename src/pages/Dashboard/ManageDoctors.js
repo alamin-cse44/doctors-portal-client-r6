@@ -1,49 +1,48 @@
 import React from "react";
 import { useQuery } from "react-query";
 import Loading from "../Shared/Loading";
-import UserRow from "./UserRow";
+import DoctorRow from "./DoctorRow";
 
-const AllUsers = () => {
+const ManageDoctors = () => {
   const {
-    data: users,
+    data: doctors,
     isLoading,
     refetch,
-  } = useQuery("users", () =>
-    fetch("https://lit-wave-92560.herokuapp.com/user/", {
-      method: "GET",
+  } = useQuery("doctors", () =>
+    fetch("https://lit-wave-92560.herokuapp.com/doctors", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     }).then((res) => res.json())
   );
+
   if (isLoading) {
     return <Loading></Loading>;
   }
+
   return (
     <div>
-      <h2>
-        We have <span className="font-bold text-cyan-600">{users.length}</span>{" "}
-        users
-      </h2>
+      <h1>Manage {doctors.length} doctors</h1>
 
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
             <tr>
               <th></th>
-              <th>User</th>
-              <th>Admin Role</th>
-              <th>Remove Admin</th>
+              <th>Avatar</th>
+              <th>Name</th>
+              <th>Speciality</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
-              <UserRow
-                key={user._id}
-                user={user}
+            {doctors.map((doctor, index) => (
+              <DoctorRow
+                key={doctor._id}
+                doctor={doctor}
                 index={index}
                 refetch={refetch}
-              ></UserRow>
+              ></DoctorRow>
             ))}
           </tbody>
         </table>
@@ -52,4 +51,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default ManageDoctors;

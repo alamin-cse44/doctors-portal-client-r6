@@ -13,7 +13,7 @@ const Navbar = () => {
   const logout = () => {
     signOut(auth);
     navigate("/");
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
   };
   const menuItems = (
     <>
